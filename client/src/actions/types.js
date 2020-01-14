@@ -1,0 +1,4 @@
+export const GET_DIARIES = 'GET_DIARIES'
+export const ADD_DIARY = 'ADD_DIARY'
+export const DELETE_DIARY = 'DELETE_DIARY'
+export const DIARIES_LOADING = 'DIARIES_LOADING'
