@@ -15,3 +15,8 @@
 .view-function-toggle {
   font-size: 0.8rem;
 }
+
+.editor-container {
+  height:50vh;
+  margin: 1rem 0 5rem 0;
+}
