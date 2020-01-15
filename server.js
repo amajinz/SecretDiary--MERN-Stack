@@ -1,25 +1,29 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
-const bodyParser = require("body-parser");
 const cors = require('cors')
 const path = require('path')
-const diaries = require('./routes/api/diaries')
+const config = require('./config/keys')
+
 
 const app = express()
 app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(morgan('tiny'))
-app.use('/api/diaries', diaries)
+
+//Routes
+app.use('/api/diaries', require('./routes/api/diaries'))
+app.use('/api/users', require('./routes/api/users'))
+app.use('/api/auth', require('./routes/api/auth'))
 
 
 
 //Database
-const dbURI = require('./config/keys').MONGODB_URI
+const dbURI = config.MONGODB_URI
 mongoose.connect(dbURI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 })
     .then(() => { console.log('Mongoose is connected.') })
     .catch(err => console.log(err)

@@ -12,8 +12,13 @@ const DiarySchema = new Schema({
     date: {
         type: Date,
         default: Date.now()
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
 })
+
 //Model 
 
 module.exports = Diary = mongoose.model('Diary', DiarySchema)

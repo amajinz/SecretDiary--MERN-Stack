@@ -5,3 +5,6 @@ const api = '/api'
 export const endpoint = `${localhost}${api}`
 export const getDiariesURL = `${endpoint}/diaries`
 export const deleteDiariesURL = id => `${endpoint}/diaries/${id}/delete`
+export const signupURL = `${endpoint}/users`
+export const loginURL = `${endpoint}/auth`
+export const authenticationURL = `${endpoint}/auth/user`
