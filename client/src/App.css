@@ -1,3 +1,17 @@
 .edit-btn {
   margin-right: 0.5rem;
 }
+
+.diary-title {
+  font-size: 2.5rem;
+  margin: 1rem 0 3rem 0;
+}
+
+.diary-view-function {
+  display: flex;
+  justify-content: space-between;
+}
+
+.view-function-toggle {
+  font-size: 0.8rem;
+}

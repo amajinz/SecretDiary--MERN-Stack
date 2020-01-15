@@ -1,27 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-import Nav from './components/Nav'
-import DiaryList from './components/DiaryList'
 import { Provider } from 'react-redux'
 import { loadUser } from './actions/authActions'
 import store from './store'
+import BaseRouter from './routes'
 
 class App extends Component {
-  componentDidMount() {
+  componentDidMount () {
     store.dispatch(loadUser())
   }
 
-  render() {
+  render () {
     return (
       <Provider store={store}>
         <div className="App">
-          <Nav />
-          <DiaryList />
+          <Router>
+            <BaseRouter />
+          </Router>
         </div>
       </Provider>
-    );
+    )
   }
 }
 
-export default App;
+export default App

@@ -4,7 +4,7 @@ import errorReducer from './errorReducer'
 import authReducer from './authReducer'
 
 export default combineReducers({
-    diary: diaryReducer,
-    error: errorReducer,
-    auth: authReducer
+  diary: diaryReducer,
+  error: errorReducer,
+  auth: authReducer
 })
