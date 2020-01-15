@@ -37,7 +37,7 @@ class DeleteDiaryModal extends Component {
     this.props.deleteDiary(diaryID, history)
   };
 
-  render() {
+  render () {
     return (
       <div>
         <Button onClick={this.toggle} href='#'>
@@ -51,7 +51,7 @@ class DeleteDiaryModal extends Component {
             <Button color='danger' style={{ marginTop: '2rem' }} onClick={this.handleDelete} block>
               Yes, I want to delete this diary.
             </Button>
-            <Button style={{ marginBottom: '2rem' }} onClick={this.toggle} block> No, I Don't want to delete it</Button>
+            <Button style={{ marginBottom: '2rem' }} onClick={this.toggle} block> No, I Do not want to delete it</Button>
           </ModalBody>
         </Modal>
       </div >
