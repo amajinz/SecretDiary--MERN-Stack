@@ -11,7 +11,7 @@ class DeleteDiaryModal extends Component {
   };
 
   static propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool,
     history: PropTypes.object.isRequired,
     deleteDiary: PropTypes.func.isRequired,
     diaryID: PropTypes.string.isRequired
@@ -28,16 +28,15 @@ class DeleteDiaryModal extends Component {
   };
 
   handleDelete = e => {
-    const { diaryID, history } = this.props;
+    const { diaryID, history, isAuthenticated } = this.props;
+    if (!isAuthenticated) return;
     this.props.deleteDiary(diaryID, history);
   };
 
   render() {
     return (
       <div>
-        <Button onClick={this.toggle} href="#">
-          Delete
-        </Button>
+        <Button onClick={this.toggle}>Delete</Button>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Are you sure? </ModalHeader>

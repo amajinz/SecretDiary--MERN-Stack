@@ -6,6 +6,10 @@ import DiaryEditor from "./DiaryEditor";
 import PropTypes from "prop-types";
 
 class NewDiary extends Component {
+  static propTypes = {
+    isAuthenticated: PropTypes.bool
+  };
+
   render() {
     const { isAuthenticated } = this.props;
 
@@ -30,10 +34,6 @@ class NewDiary extends Component {
     );
   }
 }
-
-NewDiary.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated

@@ -14,6 +14,13 @@ class DiaryEditor extends Component {
     body: ""
   };
 
+  static propTypes = {
+    placeholder: PropTypes.string,
+    diary: PropTypes.object,
+    action: PropTypes.string.isRequired,
+    history: PropTypes.object.isRequired
+  };
+
   componentDidMount() {
     if (this.props.action === "create") return;
     const diary = this.props.diary;
@@ -74,13 +81,6 @@ class DiaryEditor extends Component {
     "image",
     "video"
   ];
-
-  propTypes = {
-    placeholder: PropTypes.string,
-    diary: PropTypes.object,
-    action: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired
-  };
 
   render() {
     const { title, body } = this.state;

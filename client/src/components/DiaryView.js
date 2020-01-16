@@ -24,9 +24,12 @@ class DiaryView extends React.Component {
   };
 
   static propTypes = {
-    match: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
-    getDiary: PropTypes.func.isRequired
+    match: PropTypes.object,
+    params: PropTypes.object,
+    getDiary: PropTypes.func,
+    diary: PropTypes.object,
+    isAuthenticated: PropTypes.bool,
+    fetchDiary: PropTypes.func
   };
 
   toggle = () => {
@@ -61,7 +64,7 @@ class DiaryView extends React.Component {
                 <Nav className="ml-auto" navbar>
                   <ButtonGroup>
                     <Link to={`${params.id}/edit`}>
-                      <Button diaryID={params.id}>Edit</Button>
+                      <Button>Edit</Button>
                     </Link>
                     <Link to="#">
                       <DeleteDiaryModal diaryID={params.id} />
@@ -80,7 +83,7 @@ class DiaryView extends React.Component {
               </p>
 
               <CardTitle className="diary-title">{diary.title}</CardTitle>
-              <CardText>
+              <CardText tag="div">
                 <div dangerouslySetInnerHTML={{ __html: diary.body }} />
               </CardText>
             </CardBody>
@@ -90,12 +93,6 @@ class DiaryView extends React.Component {
     );
   }
 }
-
-DiaryView.propTypes = {
-  diary: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  fetchDiary: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   diary: state.diary.diary,
