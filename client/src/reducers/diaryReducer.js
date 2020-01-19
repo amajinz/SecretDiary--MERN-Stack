@@ -4,7 +4,8 @@ import {
   ADD_DIARY,
   UPDATE_DIARY,
   DELETE_DIARY,
-  DIARIES_LOADING
+  DIARIES_LOADING,
+  CLEAR_DIARY
 } from "../actions/types";
 
 const initialState = {
@@ -37,7 +38,12 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
-
+    case CLEAR_DIARY:
+      return {
+        diaries: [],
+        diary: null,
+        loading: false
+      };
     case GET_DIARY:
       return {
         ...state,

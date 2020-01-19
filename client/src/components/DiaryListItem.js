@@ -18,7 +18,6 @@ const DiaryListItem = props => {
   const toggle = () => {
     setOpen(!open);
   };
-
   return (
     <ListGroupItem
       action

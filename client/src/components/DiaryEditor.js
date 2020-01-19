@@ -7,6 +7,7 @@ import { Button, Container, Input } from "reactstrap";
 import ReactQuill from "react-quill";
 import PropTypes from "prop-types";
 import { addDiary, editDiary } from "../actions/diaryActions";
+import { decryptContent } from "../encryption";
 
 class DiaryEditor extends Component {
   state = {
@@ -23,8 +24,11 @@ class DiaryEditor extends Component {
 
   componentDidMount() {
     if (this.props.action === "create") return;
-    const diary = this.props.diary;
-    this.setState(diary);
+    const { diary } = this.props;
+    this.setState({
+      title: diary.title,
+      body: decryptContent(diary.body)
+    });
   }
 
   updateTitleState = e => {
@@ -37,12 +41,12 @@ class DiaryEditor extends Component {
 
   handleSave = () => {
     const { action, history, diary } = this.props;
-    const { title, body } = this.state;
+    const { title, body, secret } = this.state;
 
     if (action === "create") {
-      this.props.addDiary({ title, body }, history);
+      this.props.addDiary({ title, body }, history, secret);
     } else {
-      this.props.editDiary(diary._id, { title, body }, history);
+      this.props.editDiary(diary._id, { title, body }, history, secret);
     }
   };
 

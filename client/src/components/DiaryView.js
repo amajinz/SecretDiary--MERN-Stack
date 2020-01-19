@@ -16,11 +16,14 @@ import {
 } from "reactstrap";
 import PropTypes from "prop-types";
 import { getDiary } from "../actions/diaryActions";
+import { loadUser } from "../actions/authActions";
 import DeleteDiaryModal from "./DeleteDiaryModal";
+import { decryptContent } from "../encryption";
 
 class DiaryView extends React.Component {
   state = {
-    isOpen: false
+    isOpen: false,
+    secret: "secret"
   };
 
   static propTypes = {
@@ -42,14 +45,16 @@ class DiaryView extends React.Component {
     const {
       match: { params }
     } = this.props;
-    this.props.getDiary(params.id);
+    const { secret } = this.state;
+    this.props.getDiary(params.id, secret);
   }
 
   render() {
-    const { diary } = this.props;
     const {
-      match: { params }
+      match: { params },
+      diary
     } = this.props;
+    const { secret } = this.state;
 
     return (
       <Container>
@@ -84,7 +89,11 @@ class DiaryView extends React.Component {
 
               <CardTitle className="diary-title">{diary.title}</CardTitle>
               <CardText tag="div">
-                <div dangerouslySetInnerHTML={{ __html: diary.body }} />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: decryptContent(diary.body, secret)
+                  }}
+                />
               </CardText>
             </CardBody>
           </Card>

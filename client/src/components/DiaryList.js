@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Container, ListGroup, Jumbotron } from "reactstrap";
-import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import { getDiaries } from "../actions/diaryActions";
 import PropTypes from "prop-types";
@@ -16,13 +15,16 @@ class DiaryList extends Component {
     const { isAuthenticated } = this.props.auth;
     const userDisplay = (
       <ListGroup>
+        {diaries.length === 0 && (
+          <Jumbotron fluid>
+            <Container fluid>
+              <h1 className="display-3">Write your first diary.</h1>
+            </Container>
+          </Jumbotron>
+        )}
         {diaries &&
           diaries.map(diary => {
-            return (
-              <CSSTransition key={diary._id} timeout={500} classNames="fade">
-                <DiaryListItem diary={diary} />
-              </CSSTransition>
-            );
+            return <DiaryListItem diary={diary} />;
           })}
       </ListGroup>
     );

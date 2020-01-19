@@ -12,6 +12,7 @@ class EditDiary extends Component {
     } = this.props;
     this.props.getDiary(params.id);
   }
+
   render() {
     const { diary, isAuthenticated } = this.props;
     if (!isAuthenticated)

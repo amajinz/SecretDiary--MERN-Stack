@@ -1,4 +1,5 @@
 {
-    "MONGODB_URI": "mongodb+srv://amin:mydiary@my-diary-fjyar.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret": "kfahheflasj"
+  "MONGODB_URI": "mongodb+srv://amin:mydiary@my-diary-fjyar.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "kfahheflasj",
+  "pwdSecret": "icaejn*8_9dlsjfSDFASij"
 }

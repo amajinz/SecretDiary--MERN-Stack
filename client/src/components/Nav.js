@@ -36,7 +36,7 @@ class AppNavbar extends Component {
     const authLinks = (
       <React.Fragment>
         <NavItem>
-          <NavLink href="/new">Write Diary</NavLink>
+          <NavLink href="/new">New Entry</NavLink>
         </NavItem>
         <NavItem>
           <Logout />
