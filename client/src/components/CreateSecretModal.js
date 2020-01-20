@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import {
   Button,
   Modal,
@@ -7,45 +7,47 @@ import {
   ModalBody,
   Input,
   Alert
-} from "reactstrap";
-import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import { addDiary } from "../actions/diaryActions";
-import { encryptContent, decryptContent } from "../encryption";
+} from 'reactstrap'
+import { connect } from 'react-redux'
+import { PropTypes } from 'prop-types'
+import { addDiary } from '../actions/diaryActions'
+import { encryptContent } from '../encryption'
 
 class CreateSecretModal extends Component {
   state = {
     modal: false,
-    secret: "",
-    secretConfirmation: ""
+    secret: '',
+    secretConfirmation: ''
   };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     history: PropTypes.object.isRequired,
-    diaryID: PropTypes.string.isRequired
+    diaryID: PropTypes.string,
+    addDiary: PropTypes.func,
+    body: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
   };
 
   toggle = () => {
     this.setState({
       modal: !this.state.modal
-    });
+    })
   };
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value })
   };
 
   handleClick = () => {
-    const { diary, addDiary, history, body, title } = this.props;
-    const { secret } = this.state;
-    const encryptedBody = encryptContent(body, secret);
-    addDiary({ title, body: encryptedBody }, history);
+    const { addDiary, history, body, title } = this.props
+    const { secret } = this.state
+    const encryptedBody = encryptContent(body, secret)
+    addDiary({ title, body: encryptedBody }, history)
   };
 
-  render() {
-    const { diary } = this.props;
-    const { secretConfirmation, secret } = this.state;
+  render () {
+    const { secretConfirmation, secret } = this.state
     return (
       <div>
         <Button id="caret" onClick={this.toggle}>
@@ -54,12 +56,11 @@ class CreateSecretModal extends Component {
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>
-            {" "}
-            Enter your secret for this diary{" "}
+            Enter your secret for this diary
           </ModalHeader>
           <ModalBody>
             <Alert color="danger">
-              You can't retrieve this diary if you forget this secret!
+              You can not retrieve this diary if you forget this secret!
             </Alert>
             <Input
               type="password"
@@ -80,7 +81,7 @@ class CreateSecretModal extends Component {
 
             {secret === secretConfirmation ? (
               <Button
-                style={{ marginTop: "2rem" }}
+                style={{ marginTop: '2rem' }}
                 onClick={this.handleClick}
                 block
               >
@@ -92,8 +93,8 @@ class CreateSecretModal extends Component {
           </ModalBody>
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default connect(null, { addDiary })(withRouter(CreateSecretModal));
+export default connect(null, { addDiary })(withRouter(CreateSecretModal))

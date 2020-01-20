@@ -7,7 +7,6 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.1",
-    "babel-eslint": "^10.0.3",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
@@ -24,12 +23,13 @@
     "typescript": "^3.7.4"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-standard": "^4.0.1"
   },
   "scripts": {

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 import {
   GET_DIARIES,
   ADD_DIARY,
@@ -8,20 +8,19 @@ import {
   GET_DIARY,
   CLEAR_DIARY,
   GET_SECRET
-} from "./types";
+} from './types'
 import {
   getDiariesURL,
   getDiaryURL,
   addDiaryURL,
   updateDiaryURL,
   deleteDiaryURL
-} from "../constants";
-import { tokenHeader } from "./authActions";
-import { returnErrors } from "./errorActions";
-import { encryptContent, decryptContent } from "../encryption";
+} from '../constants'
+import { tokenHeader } from './authActions'
+import { returnErrors } from './errorActions'
 
 export const getDiaries = () => (dispatch, getState) => {
-  dispatch(setDiariesLoading());
+  dispatch(setDiariesLoading())
   axios
     .get(getDiariesURL, tokenHeader(getState))
     .then(res =>
@@ -32,11 +31,11 @@ export const getDiaries = () => (dispatch, getState) => {
     )
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
+    )
+}
 
 export const getDiary = id => (dispatch, getState) => {
-  dispatch(setDiariesLoading());
+  dispatch(setDiariesLoading())
   axios
     .get(getDiaryURL(id), tokenHeader(getState))
     .then(res => {
@@ -45,50 +44,49 @@ export const getDiary = id => (dispatch, getState) => {
       dispatch({
         type: GET_DIARY,
         payload: res.data
-      });
+      })
     })
     .catch(err => {
-      dispatch(returnErrors(err.response, err.response.status));
-    });
-};
+      dispatch(returnErrors(err.response, err.response.status))
+    })
+}
 
 export const addDiary = ({ title, body }, history) => (dispatch, getState) => {
-  dispatch(setDiariesLoading());
-  const content = JSON.stringify({ title, body });
+  dispatch(setDiariesLoading())
+  const content = JSON.stringify({ title, body })
   axios
     .post(addDiaryURL, content, tokenHeader(getState))
     .then(res => {
-      const id = res.data._id;
       dispatch({
         type: ADD_DIARY,
         payload: res.data
-      });
-      history.push(`/`);
+      })
+      history.push('/')
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
+    )
+}
 
 export const editDiary = (id, { title, body }, history) => (
   dispatch,
   getState
 ) => {
-  dispatch(setDiariesLoading());
-  const content = JSON.stringify({ title, body });
+  dispatch(setDiariesLoading())
+  const content = JSON.stringify({ title, body })
   axios
     .put(updateDiaryURL(id), content, tokenHeader(getState))
     .then(res => {
       dispatch({
         type: UPDATE_DIARY,
         payload: res.data
-      });
-      history.push(`/diary/${id}`);
+      })
+      history.push(`/diary/${id}`)
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
+    )
+}
 
 export const deleteDiary = (id, history) => (dispatch, getState) => {
   axios
@@ -97,30 +95,30 @@ export const deleteDiary = (id, history) => (dispatch, getState) => {
       dispatch({
         type: DELETE_DIARY,
         payload: id
-      });
-      history.push("/");
+      })
+      history.push('/')
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
+    )
+}
 
 export const setDiariesLoading = () => {
   return {
     type: DIARIES_LOADING
-  };
-};
+  }
+}
 
 export const clearDiary = () => {
   return {
     type: CLEAR_DIARY
-  };
-};
+  }
+}
 
 export const getSecret = (id, secret, history) => dispatch => {
   dispatch({
     type: GET_SECRET,
     payload: { [id]: secret }
-  });
-  history.push(`/diary/${id}`);
-};
+  })
+  history.push(`/diary/${id}`)
+}

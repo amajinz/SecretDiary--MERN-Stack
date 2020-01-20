@@ -1,6 +1,6 @@
-import React from "react";
-import { withRouter, Link } from "react-router-dom";
-import { connect } from "react-redux";
+import React from 'react'
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import {
   Button,
   ButtonGroup,
@@ -13,12 +13,11 @@ import {
   Nav,
   Navbar,
   NavbarToggler
-} from "reactstrap";
-import PropTypes from "prop-types";
-import { getDiary } from "../actions/diaryActions";
-import { loadUser } from "../actions/authActions";
-import DeleteDiaryModal from "./DeleteDiaryModal";
-import { decryptContent } from "../encryption";
+} from 'reactstrap'
+import PropTypes from 'prop-types'
+import { getDiary } from '../actions/diaryActions'
+import DeleteDiaryModal from './DeleteDiaryModal'
+import { decryptContent } from '../encryption'
 
 class DiaryView extends React.Component {
   state = {
@@ -30,7 +29,7 @@ class DiaryView extends React.Component {
     params: PropTypes.object,
     getDiary: PropTypes.func,
     diary: PropTypes.object,
-    secret: PropTypes.string,
+    secret: PropTypes.object,
     isAuthenticated: PropTypes.bool,
     fetchDiary: PropTypes.func
   };
@@ -38,24 +37,24 @@ class DiaryView extends React.Component {
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
-    });
+    })
   };
 
-  componentDidMount() {
+  componentDidMount () {
     const {
       match: { params },
       secret
-    } = this.props;
-    this.props.getDiary(params.id, secret);
+    } = this.props
+    this.props.getDiary(params.id, secret)
   }
 
-  render() {
+  render () {
     const {
       match: { params },
       diary
-    } = this.props;
-    const { secret } = this.props;
-
+    } = this.props
+    const { secret } = this.props
+    const editHref = params.id + '/edit'
     return (
       <Container>
         {diary && (
@@ -68,7 +67,7 @@ class DiaryView extends React.Component {
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                   <ButtonGroup>
-                    <Link to={`${params.id}/edit`}>
+                    <Link to={editHref}>
                       <Button>Edit</Button>
                     </Link>
                     <Link to="#">
@@ -83,7 +82,7 @@ class DiaryView extends React.Component {
             </Navbar>
             <CardBody>
               <p>
-                {new Date(diary.date).toDateString()}{" "}
+                {new Date(diary.date).toDateString()}{' '}
                 {new Date(diary.date).toLocaleTimeString()}
               </p>
 
@@ -99,7 +98,7 @@ class DiaryView extends React.Component {
           </Card>
         )}
       </Container>
-    );
+    )
   }
 }
 
@@ -108,15 +107,15 @@ const mapStateToProps = state => {
     diary: state.diary.diary,
     secret: state.diary.secret,
     isAuthenticated: state.auth.isAuthenticated
-  };
-};
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
     getDiary: id => dispatch(getDiary(id))
-  };
-};
+  }
+}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DiaryView)
-);
+)

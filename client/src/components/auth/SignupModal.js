@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   Alert,
   Button,
@@ -10,19 +10,19 @@ import {
   Label,
   Input,
   NavLink
-} from "reactstrap";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { clearErrors } from "../../actions/errorActions";
-import { signup } from "../../actions/authActions";
+} from 'reactstrap'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { clearErrors } from '../../actions/errorActions'
+import { signup } from '../../actions/authActions'
 
 class SignupModal extends Component {
   state = {
     modal: false,
-    name: "",
-    email: "",
-    password: "",
-    passwordConfirmation: "",
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
     msg: null
   };
 
@@ -33,48 +33,48 @@ class SignupModal extends Component {
     clearErrors: PropTypes.func.isRequired
   };
 
-  componentDidUpdate(prevProps) {
-    const { error } = this.props;
+  componentDidUpdate (prevProps) {
+    const { error } = this.props
     if (error !== prevProps.error) {
-      if (error.id === "SIGNUP_FAIL") {
-        this.setState({ msg: error.msg.msg });
+      if (error.id === 'SIGNUP_FAIL') {
+        this.setState({ msg: error.msg.msg })
       } else {
-        this.setState({ msg: null });
+        this.setState({ msg: null })
       }
     }
 
     if (this.state.modal) {
       if (this.props.isAuthenticated) {
-        this.toggle();
+        this.toggle()
       }
     }
   }
 
   toggle = () => {
-    this.props.clearErrors();
+    this.props.clearErrors()
     this.setState({
       modal: !this.state.modal
-    });
+    })
   };
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value })
   };
 
   onSubmit = e => {
-    e.preventDefault();
-    const { name, email, password, passwordConfirmation } = this.state;
+    e.preventDefault()
+    const { name, email, password, passwordConfirmation } = this.state
     const newUser = {
       name,
       email,
       password,
       passwordConfirmation
-    };
-    this.props.signup(newUser);
+    }
+    this.props.signup(newUser)
   };
 
-  render() {
-    const { msg } = this.state;
+  render () {
+    const { msg } = this.state
     return (
       <div>
         <NavLink onClick={this.toggle} href="#">
@@ -85,10 +85,10 @@ class SignupModal extends Component {
           <ModalHeader toggle={this.toggle}>Signup</ModalHeader>
           <ModalBody>
             {msg ? (
-              typeof msg === "object" ? (
+              typeof msg === 'object' ? (
                 <Alert color="danger">
                   {msg.map(m => (
-                    <p>- {m}</p>
+                    <p key={m}>- {m}</p>
                   ))}
                 </Alert>
               ) : (
@@ -129,7 +129,7 @@ class SignupModal extends Component {
                   className="mb-3"
                   onChange={this.onChange}
                 />
-                <Button color="dark" style={{ marginTop: "2rem" }} block>
+                <Button color="dark" style={{ marginTop: '2rem' }} block>
                   Signup
                 </Button>
               </FormGroup>
@@ -137,13 +137,13 @@ class SignupModal extends Component {
           </ModalBody>
         </Modal>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error
-});
+})
 
-export default connect(mapStateToProps, { signup, clearErrors })(SignupModal);
+export default connect(mapStateToProps, { signup, clearErrors })(SignupModal)

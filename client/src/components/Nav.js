@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   Collapse,
   Navbar,
@@ -9,11 +9,11 @@ import {
   NavItem,
   NavLink,
   Container
-} from "reactstrap";
-import SignupModal from "./auth/SignupModal";
-import LoginModal from "./auth/LoginModal";
-import Logout from "./auth/Logout";
-import PropTypes from "prop-types";
+} from 'reactstrap'
+import SignupModal from './auth/SignupModal'
+import LoginModal from './auth/LoginModal'
+import Logout from './auth/Logout'
+import PropTypes from 'prop-types'
 
 class AppNavbar extends Component {
   state = {
@@ -27,11 +27,11 @@ class AppNavbar extends Component {
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
-    });
+    })
   };
 
-  render() {
-    const { isAuthenticated } = this.props.auth;
+  render () {
+    const { isAuthenticated } = this.props.auth
 
     const authLinks = (
       <React.Fragment>
@@ -42,7 +42,7 @@ class AppNavbar extends Component {
           <Logout />
         </NavItem>
       </React.Fragment>
-    );
+    )
 
     const guestLinks = (
       <React.Fragment>
@@ -54,7 +54,7 @@ class AppNavbar extends Component {
           <SignupModal />
         </NavItem>
       </React.Fragment>
-    );
+    )
 
     return (
       <div>
@@ -78,12 +78,12 @@ class AppNavbar extends Component {
           </Container>
         </Navbar>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   auth: state.auth
-});
+})
 
-export default connect(mapStateToProps, null)(AppNavbar);
+export default connect(mapStateToProps, null)(AppNavbar)

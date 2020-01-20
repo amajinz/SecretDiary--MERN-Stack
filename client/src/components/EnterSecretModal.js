@@ -1,39 +1,40 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { Button, Modal, ModalHeader, ModalBody, Input } from "reactstrap";
-import { connect } from "react-redux";
-import { getSecret } from "../actions/diaryActions";
-import { PropTypes } from "prop-types";
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { Button, Modal, ModalHeader, ModalBody, Input } from 'reactstrap'
+import { connect } from 'react-redux'
+import { getSecret } from '../actions/diaryActions'
+import { PropTypes } from 'prop-types'
 
 class EnterSecretModal extends Component {
   state = {
     modal: false,
-    secret: ""
+    secret: ''
   };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     history: PropTypes.object.isRequired,
-    diaryID: PropTypes.string.isRequired
+    diaryID: PropTypes.string,
+    diary: PropTypes.object.isRequired,
+    getSecret: PropTypes.func.isRequired
   };
 
   toggle = () => {
     this.setState({
       modal: !this.state.modal
-    });
+    })
   };
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value })
   };
 
   handleClick = () => {
-    const { diary, getSecret, history } = this.props;
-    getSecret(diary._id, this.state.secret, history);
+    const { diary, getSecret, history } = this.props
+    getSecret(diary._id, this.state.secret, history)
   };
 
-  render() {
-    const { diary } = this.props;
+  render () {
     return (
       <div>
         <Button id="caret" onClick={this.toggle}>
@@ -42,8 +43,8 @@ class EnterSecretModal extends Component {
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>
-            {" "}
-            Enter your secret for this diary{" "}
+            {' '}
+            Enter your secret for this diary{' '}
           </ModalHeader>
           <ModalBody>
             <Input
@@ -54,7 +55,7 @@ class EnterSecretModal extends Component {
               onChange={this.onChange}
             />
             <Button
-              style={{ marginTop: "2rem" }}
+              style={{ marginTop: '2rem' }}
               onClick={this.handleClick}
               block
             >
@@ -64,8 +65,8 @@ class EnterSecretModal extends Component {
           </ModalBody>
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default connect(null, { getSecret })(withRouter(EnterSecretModal));
+export default connect(null, { getSecret })(withRouter(EnterSecretModal))

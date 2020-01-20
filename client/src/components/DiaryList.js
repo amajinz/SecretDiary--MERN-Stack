@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { Container, ListGroup, Jumbotron } from "reactstrap";
-import { connect } from "react-redux";
-import { getDiaries } from "../actions/diaryActions";
-import PropTypes from "prop-types";
-import DiaryListItem from "./DiaryListItem";
+import React, { Component } from 'react'
+import { Container, ListGroup, Jumbotron } from 'reactstrap'
+import { connect } from 'react-redux'
+import { getDiaries } from '../actions/diaryActions'
+import PropTypes from 'prop-types'
+import DiaryListItem from './DiaryListItem'
 
 class DiaryList extends Component {
-  componentDidMount() {
-    this.props.getDiaries();
+  componentDidMount () {
+    this.props.getDiaries()
   }
 
-  render() {
-    const { diaries } = this.props.diary;
-    const { isAuthenticated } = this.props.auth;
+  render () {
+    const { diaries } = this.props.diary
+    const { isAuthenticated } = this.props.auth
     const userDisplay = (
       <ListGroup>
         {diaries.length === 0 && (
@@ -24,10 +24,10 @@ class DiaryList extends Component {
         )}
         {diaries &&
           diaries.map(diary => {
-            return <DiaryListItem diary={diary} />;
+            return <DiaryListItem diary={diary} key={diary._id} />
           })}
       </ListGroup>
-    );
+    )
 
     const guestDisplay = (
       <Jumbotron fluid>
@@ -36,10 +36,10 @@ class DiaryList extends Component {
           <p className="lead">Login to start!</p>
         </Container>
       </Jumbotron>
-    );
+    )
     return (
       <Container>{isAuthenticated ? userDisplay : guestDisplay}</Container>
-    );
+    )
   }
 }
 
@@ -47,11 +47,11 @@ DiaryList.propTypes = {
   getDiaries: PropTypes.func.isRequired,
   diary: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   diary: state.diary,
   auth: state.auth
-});
+})
 
-export default connect(mapStateToProps, { getDiaries })(DiaryList);
+export default connect(mapStateToProps, { getDiaries })(DiaryList)

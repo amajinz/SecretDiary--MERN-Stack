@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { Container, Jumbotron } from "reactstrap";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import DiaryEditor from "./DiaryEditor";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import { Container, Jumbotron } from 'reactstrap'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import DiaryEditor from './DiaryEditor'
+import PropTypes from 'prop-types'
 
 class NewDiary extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool
   };
 
-  render() {
-    const { isAuthenticated } = this.props;
+  render () {
+    const { isAuthenticated } = this.props
 
-    if (!isAuthenticated)
+    if (!isAuthenticated) {
       return (
         <Container>
           <Jumbotron fluid>
@@ -23,7 +23,8 @@ class NewDiary extends Component {
             </Container>
           </Jumbotron>
         </Container>
-      );
+      )
+    }
     return (
       <div>
         <Container>
@@ -31,12 +32,12 @@ class NewDiary extends Component {
         </Container>
         <DiaryEditor action="create" />
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
-});
+})
 
-export default connect(mapStateToProps, null)(withRouter(NewDiary));
+export default connect(mapStateToProps, null)(withRouter(NewDiary))

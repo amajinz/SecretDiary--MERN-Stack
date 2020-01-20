@@ -1,28 +1,29 @@
-import React, { Component } from "react";
-import { NavLink } from "reactstrap";
-import { connect } from "react-redux";
-import { logout } from "../../actions/authActions";
-import { clearDiary } from "../../actions/diaryActions";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import { NavLink } from 'reactstrap'
+import { connect } from 'react-redux'
+import { logout } from '../../actions/authActions'
+import { clearDiary } from '../../actions/diaryActions'
+import PropTypes from 'prop-types'
 
 class Logout extends Component {
   static propTypes = {
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    clearDiary: PropTypes.func.isRequired
   };
 
-  render() {
+  render () {
     return (
       <NavLink
         onClick={() => {
-          this.props.logout();
-          this.props.clearDiary();
+          this.props.logout()
+          this.props.clearDiary()
         }}
         href="#"
       >
         Logout
       </NavLink>
-    );
+    )
   }
 }
 
-export default connect(null, { logout, clearDiary })(Logout);
+export default connect(null, { logout, clearDiary })(Logout)

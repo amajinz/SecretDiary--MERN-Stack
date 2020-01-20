@@ -1,0 +1,13 @@
+services:
+  - docker
+
+before_install:
+  - docker build -t jinseal/project4 .
+
+script:
+  - docker run -e CI=true jinseal/project4 node node_modules/eslint/bin/eslint.js  . -c .eslintrc.json
+
+deploy:
+  provider: heroku
+  api_key: $HEROKU_KEY
+  app: secure-diary

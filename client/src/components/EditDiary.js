@@ -1,21 +1,29 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { Container, Jumbotron } from "reactstrap";
-import DiaryEditor from "./DiaryEditor";
-import { getDiary } from "../actions/diaryActions";
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Container, Jumbotron } from 'reactstrap'
+import DiaryEditor from './DiaryEditor'
+import { getDiary } from '../actions/diaryActions'
+import PropTypes from 'prop-types'
 
 class EditDiary extends Component {
-  componentDidMount() {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    getDiary: PropTypes.func,
+    diary: PropTypes.object,
+    isAuthenticated: PropTypes.bool
+  };
+
+  componentDidMount () {
     const {
       match: { params }
-    } = this.props;
-    this.props.getDiary(params.id);
+    } = this.props
+    this.props.getDiary(params.id)
   }
 
-  render() {
-    const { diary, isAuthenticated } = this.props;
-    if (!isAuthenticated)
+  render () {
+    const { diary, isAuthenticated } = this.props
+    if (!isAuthenticated) {
       return (
         <Container>
           <Jumbotron fluid>
@@ -25,7 +33,8 @@ class EditDiary extends Component {
             </Container>
           </Jumbotron>
         </Container>
-      );
+      )
+    }
 
     return (
       <div>
@@ -38,22 +47,22 @@ class EditDiary extends Component {
           <p>Please login</p>
         )}
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   diary: state.diary.diary,
   isAuthenticated: state.auth.isAuthenticated
-});
+})
 
 const mapDispatchToProps = dispatch => {
   return {
     getDiary: id => dispatch(getDiary(id))
-  };
-};
+  }
+}
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(EditDiary));
+)(withRouter(EditDiary))
