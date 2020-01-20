@@ -2,15 +2,10 @@
 
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
-import {
-  ListGroupItem,
-  Button,
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import { ListGroupItem } from "reactstrap";
+import { connect } from "react-redux";
+import { getSecret } from "../actions/diaryActions";
+import EnterSecretModal from "./EnterSecretModal";
 
 const DiaryListItem = props => {
   const [open, setOpen] = useState(false);
@@ -18,29 +13,23 @@ const DiaryListItem = props => {
   const toggle = () => {
     setOpen(!open);
   };
+
   return (
     <ListGroupItem
       action
       style={{ display: "flex", justifyContent: "space-between" }}
     >
-      <div>
+      <div style={{ overflowX: "scroll" }}>
         {`${new Date(diary.date).toLocaleDateString()} - ${diary.title}`}
       </div>
-      <ButtonDropdown isOpen={open} toggle={toggle} size="sm" className="mr">
-        <Button href={`/diary/${diary._id}`} id="caret">
-          View
-        </Button>
-        <DropdownToggle caret />
-        <DropdownMenu>
-          <DropdownItem href={`/diary/${diary._id}/edit`}>Edit</DropdownItem>
-        </DropdownMenu>
-      </ButtonDropdown>
+      <EnterSecretModal diary={diary} className="mr" />
     </ListGroupItem>
   );
 };
 
 DiaryListItem.propTypes = {
-  diary: PropTypes.object.isRequired
+  diary: PropTypes.object.isRequired,
+  getSecret: PropTypes.func
 };
 
-export default DiaryListItem;
+export default connect(null, { getSecret })(DiaryListItem);

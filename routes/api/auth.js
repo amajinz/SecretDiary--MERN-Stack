@@ -32,13 +32,11 @@ router.post("/", (req, res) => {
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
-          const secret = crypto.encryptContent(user.password, config.pwdSecret);
           res.json({
             token,
             user: {
               id: user.id,
               name: user.name,
-              secret: secret.toString(),
               email: user.email
             }
           });
@@ -56,8 +54,7 @@ router.get("/user", auth, (req, res) => {
   User.findById(req.user.id)
     .select("-password")
     .then(user => {
-      const secret = crypto.encryptContent(user.password, config.pwdSecret);
-      res.json({ ...user._doc, secret: "secret" });
+      res.json(user);
     });
 });
 

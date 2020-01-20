@@ -5,13 +5,15 @@ import {
   UPDATE_DIARY,
   DELETE_DIARY,
   DIARIES_LOADING,
-  CLEAR_DIARY
+  CLEAR_DIARY,
+  GET_SECRET
 } from "../actions/types";
 
 const initialState = {
   diaries: [],
   diary: null,
-  loading: false
+  loading: false,
+  secret: null
 };
 
 export default function(state = initialState, action) {
@@ -42,13 +44,19 @@ export default function(state = initialState, action) {
       return {
         diaries: [],
         diary: null,
-        loading: false
+        loading: false,
+        secret: null
       };
     case GET_DIARY:
       return {
         ...state,
         diary: action.payload,
         loading: false
+      };
+    case GET_SECRET:
+      return {
+        ...state,
+        secret: action.payload
       };
     default:
       return {

@@ -7,7 +7,8 @@ import { Button, Container, Input } from "reactstrap";
 import ReactQuill from "react-quill";
 import PropTypes from "prop-types";
 import { addDiary, editDiary } from "../actions/diaryActions";
-import { decryptContent } from "../encryption";
+import { encryptContent, decryptContent } from "../encryption";
+import CreateSecretModal from "./CreateSecretModal";
 
 class DiaryEditor extends Component {
   state = {
@@ -24,10 +25,12 @@ class DiaryEditor extends Component {
 
   componentDidMount() {
     if (this.props.action === "create") return;
-    const { diary } = this.props;
+
+    const { diary, secret } = this.props;
+    const secretValue = secret[diary._id];
     this.setState({
       title: diary.title,
-      body: decryptContent(diary.body)
+      body: decryptContent(diary.body, secretValue)
     });
   }
 
@@ -40,14 +43,12 @@ class DiaryEditor extends Component {
   };
 
   handleSave = () => {
-    const { action, history, diary } = this.props;
-    const { title, body, secret } = this.state;
-
-    if (action === "create") {
-      this.props.addDiary({ title, body }, history, secret);
-    } else {
-      this.props.editDiary(diary._id, { title, body }, history, secret);
-    }
+    const { action, history, diary, secret } = this.props;
+    const { title, body } = this.state;
+    const secretValue = secret[diary._id];
+    const encryptedBody = encryptContent(body, secretValue);
+    action !== "create" &&
+      this.props.editDiary(diary._id, { title, body: encryptedBody }, history);
   };
 
   modules = {
@@ -88,6 +89,7 @@ class DiaryEditor extends Component {
 
   render() {
     const { title, body } = this.state;
+    const { action } = this.props;
     return (
       <Container>
         <Input
@@ -106,18 +108,27 @@ class DiaryEditor extends Component {
           value={body}
           onChange={this.updateEditorState}
         />
-
-        <Button
-          color="dark"
-          style={{ marginTop: "6rem" }}
-          onClick={this.handleSave}
-          block
-        >
-          Save
-        </Button>
+        {action === "create" ? (
+          <CreateSecretModal body={body} title={title} />
+        ) : (
+          <Button
+            color="dark"
+            style={{ marginTop: "6rem" }}
+            onClick={this.handleSave}
+            block
+          >
+            Save
+          </Button>
+        )}
       </Container>
     );
   }
 }
 
-export default connect(null, { addDiary, editDiary })(withRouter(DiaryEditor));
+const mapStateToProps = state => ({
+  secret: state.diary.secret
+});
+
+export default connect(mapStateToProps, { addDiary, editDiary })(
+  withRouter(DiaryEditor)
+);

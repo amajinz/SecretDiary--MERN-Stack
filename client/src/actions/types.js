@@ -15,3 +15,4 @@ export const SIGNUP_FAIL = "SIGNUP_FAIL";
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const CLEAR_DIARY = "CLEAR_DIARY";
+export const GET_SECRET = "GET_SECRET";

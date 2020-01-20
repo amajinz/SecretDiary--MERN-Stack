@@ -12,7 +12,7 @@ router.get("/", auth, (req, res) => {
   Diary.find({ user: req.user.id })
     .sort({ date: -1 })
     .then(diaries => res.json(diaries))
-    .catch(err => res.json(err));
+    .catch(err => res.status(400).json(err));
 });
 
 // @route get api/diary
@@ -36,7 +36,7 @@ router.post("/new", auth, (req, res) => {
   newDiary
     .save()
     .then(diary => res.json(diary))
-    .catch(err => res.json(err));
+    .catch(err => res.status(400).json(err));
 });
 
 // @route Update api/diary
@@ -45,7 +45,7 @@ router.post("/new", auth, (req, res) => {
 router.put("/:id/update", auth, (req, res) => {
   Diary.findByIdAndUpdate(req.params.id, req.body)
     .then(diary => res.json(diary))
-    .catch(err => res.json(err));
+    .catch(err => res.status(400).json(err));
 });
 
 // @route Delete api/diaries

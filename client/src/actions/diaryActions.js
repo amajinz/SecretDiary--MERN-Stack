@@ -6,7 +6,8 @@ import {
   DELETE_DIARY,
   DIARIES_LOADING,
   GET_DIARY,
-  CLEAR_DIARY
+  CLEAR_DIARY,
+  GET_SECRET
 } from "./types";
 import {
   getDiariesURL,
@@ -51,14 +52,9 @@ export const getDiary = id => (dispatch, getState) => {
     });
 };
 
-export const addDiary = ({ title, body }, history, secret) => (
-  dispatch,
-  getState
-) => {
+export const addDiary = ({ title, body }, history) => (dispatch, getState) => {
   dispatch(setDiariesLoading());
-  const encryptBody = encryptContent(body, secret);
-  const content = JSON.stringify({ title, body: encryptBody });
-
+  const content = JSON.stringify({ title, body });
   axios
     .post(addDiaryURL, content, tokenHeader(getState))
     .then(res => {
@@ -67,22 +63,19 @@ export const addDiary = ({ title, body }, history, secret) => (
         type: ADD_DIARY,
         payload: res.data
       });
-      history.push(`/diary/${id}`);
+      history.push(`/`);
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
 
-export const editDiary = (id, { title, body }, history, secret) => (
+export const editDiary = (id, { title, body }, history) => (
   dispatch,
   getState
 ) => {
   dispatch(setDiariesLoading());
-
-  const encryptTitle = encryptContent(title, secret);
-  const encryptBody = encryptContent(body, secret);
-  const content = JSON.stringify({ encryptTitle, encryptBody });
+  const content = JSON.stringify({ title, body });
   axios
     .put(updateDiaryURL(id), content, tokenHeader(getState))
     .then(res => {
@@ -122,4 +115,12 @@ export const clearDiary = () => {
   return {
     type: CLEAR_DIARY
   };
+};
+
+export const getSecret = (id, secret, history) => dispatch => {
+  dispatch({
+    type: GET_SECRET,
+    payload: { [id]: secret }
+  });
+  history.push(`/diary/${id}`);
 };

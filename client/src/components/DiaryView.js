@@ -22,8 +22,7 @@ import { decryptContent } from "../encryption";
 
 class DiaryView extends React.Component {
   state = {
-    isOpen: false,
-    secret: "secret"
+    isOpen: false
   };
 
   static propTypes = {
@@ -31,6 +30,7 @@ class DiaryView extends React.Component {
     params: PropTypes.object,
     getDiary: PropTypes.func,
     diary: PropTypes.object,
+    secret: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     fetchDiary: PropTypes.func
   };
@@ -43,9 +43,9 @@ class DiaryView extends React.Component {
 
   componentDidMount() {
     const {
-      match: { params }
+      match: { params },
+      secret
     } = this.props;
-    const { secret } = this.state;
     this.props.getDiary(params.id, secret);
   }
 
@@ -54,7 +54,7 @@ class DiaryView extends React.Component {
       match: { params },
       diary
     } = this.props;
-    const { secret } = this.state;
+    const { secret } = this.props;
 
     return (
       <Container>
@@ -91,7 +91,7 @@ class DiaryView extends React.Component {
               <CardText tag="div">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: decryptContent(diary.body, secret)
+                    __html: decryptContent(diary.body, secret[diary._id])
                   }}
                 />
               </CardText>
@@ -103,10 +103,13 @@ class DiaryView extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  diary: state.diary.diary,
-  isAuthenticated: state.auth.isAuthenticated
-});
+const mapStateToProps = state => {
+  return {
+    diary: state.diary.diary,
+    secret: state.diary.secret,
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {

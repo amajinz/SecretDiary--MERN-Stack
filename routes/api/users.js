@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const config = require("../../config/keys");
 const jwt = require("jsonwebtoken");
-const crypto = require("../encryption");
+const owasp = require("owasp-password-strength-test");
 
 // User Model
 const User = require("../../models/User");
@@ -21,6 +21,11 @@ router.post("/", (req, res) => {
   if (password !== passwordConfirmation)
     return res.status(400).json({ msg: "Invalid password confirmation" });
 
+  const result = owasp.test(password);
+  console.log(result);
+
+  if (result.errors.length) return res.status(400).json({ msg: result.errors });
+
   // Check for existing user
   User.findOne({ email }).then(user => {
     if (user) return res.status(400).json({ msg: "Email already exists" });
@@ -33,16 +38,12 @@ router.post("/", (req, res) => {
 
     const sendRes = (err, token, user) => {
       if (err) throw err;
-      const secret = crypto
-        .encryptContent(user.password, config.pwdSecret)
-        .toString();
       return res.json({
         token,
         user: {
           id: user.id,
           name: user.name,
-          email: user.email,
-          secret: secret
+          email: user.email
         }
       });
     };
