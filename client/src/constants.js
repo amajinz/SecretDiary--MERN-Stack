@@ -1,4 +1,4 @@
-const host = 'https://secure-diary.herokuapp.com/'
+const host = 'https://secure-diary.herokuapp.com'
 // 8080
 const api = '/api'
 

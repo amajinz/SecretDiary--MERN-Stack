@@ -17,14 +17,16 @@ app.use('/api/auth', require('./routes/api/auth'))
 
 // Database
 const dbURI = config.MONGODB_URI
-mongoose.connect(dbURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-})
-  .then(() => { console.log('Mongoose is connected.') })
-  .catch(err => console.log(err)
-  )
+mongoose
+  .connect(dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
+  .then(() => {
+    console.log('Mongoose is connected.')
+  })
+  .catch(err => console.log(err))
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

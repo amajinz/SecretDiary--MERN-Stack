@@ -1,9 +1,12 @@
 # Secret Dairy
 
 This is a simply diary built with MongoDB, Express.js, React.js and Node.js, styled with Reactstrap, and backed with Redux, rich text editor, and CI/CD pipeline.
-The site is deployed via Heroku at: https://secret-diary.herokuapp.com.
+The site is deployed via Heroku at: https://secure-diary.herokuapp.com.
 
 I wrote the site to practice the MERN stack and Redux. All functions are stored in Redux. This app is responsive.
+
+DEMO:
+![Demo](demo.gif)
 
 ## Directory Layout
 
@@ -11,9 +14,6 @@ I wrote the site to practice the MERN stack and Redux. All functions are stored 
 - `middleware`: JWT config
 - `model`: Diary and User models
 - `routes`: server side routes
-
-DEMO:
-![Demo](demo.gif)
 
 ## Access Control
 
@@ -23,7 +23,7 @@ DEMO:
 ## Encryption
 
 - Diaries' contents are encrypted in browser with secret key provided by user.
-- User needs to provide secret to decode a diary. The secret will be saved in Redux until logout.
+- User needs to provide secret to decrypt a diary. The secret will be saved in Redux until logout.
 - Redux only stores one pair of { diary.id: secret}.
 - Traffic are secured with HTTPS.
 
